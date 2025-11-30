@@ -61,16 +61,20 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        // TODO 06: Observe the WorkInfo.
+        // This allows us to update the UI based on the state of the background work.
         viewModel.outputWorkInfos.observe(this) { workInfos ->
             if (workInfos.isNullOrEmpty()) {
                 return@observe
             }
 
+            // We only have one worker in this example, so we check the first one.
             val workInfo = workInfos[0]
 
             if (workInfo.state.isFinished) {
                 progressBar.visibility = View.GONE
                 if (workInfo.state == WorkInfo.State.SUCCEEDED) {
+                    // Get the output data (the URI of the filtered image).
                     val outputUri = workInfo.outputData.getString(ImageWorker.KEY_OUTPUT_URI)
                     if (!outputUri.isNullOrEmpty()) {
                         resultImageView.visibility = View.VISIBLE

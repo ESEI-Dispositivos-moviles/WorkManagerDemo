@@ -19,15 +19,20 @@ import java.io.FileOutputStream
 import java.util.UUID
 import androidx.core.net.toUri
 
+// TODO 03: Create the Worker class.
+// This class performs the background work. It must extend CoroutineWorker (or Worker).
 class ImageWorker(context: Context, params: WorkerParameters) : CoroutineWorker(context, params) {
 
+    // Override doWork() to define the actual work.
+    // This runs on a background thread (Dispatchers.Default by default for CoroutineWorker).
     override suspend fun doWork(): Result {
+        // Read input data passed to the worker.
         val imageUriString = inputData.getString(KEY_IMAGE_URI) ?: return Result.failure()
 
         return withContext(Dispatchers.IO) {
             try {
                 val resolver = applicationContext.contentResolver
-                val imageUri = imageUriString.toUri()
+                val imageUri = Uri.parse(imageUriString)
                 
                 // 1. Read the image
                 val bitmap = BitmapFactory.decodeStream(resolver.openInputStream(imageUri))
@@ -42,6 +47,7 @@ class ImageWorker(context: Context, params: WorkerParameters) : CoroutineWorker(
                 val outputUri = saveBitmapToFile(applicationContext, grayBitmap)
 
                 // 5. Return output
+                // Create Data object to pass output back to the ViewModel/UI.
                 val outputData = workDataOf(KEY_OUTPUT_URI to outputUri.toString())
                 Result.success(outputData)
 
