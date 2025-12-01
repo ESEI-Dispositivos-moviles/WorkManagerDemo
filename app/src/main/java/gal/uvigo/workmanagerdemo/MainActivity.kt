@@ -21,6 +21,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+    // registerForActivityResult is how you launch something that returns a result
+    // In this case the image picked from the photo gallery
     private val pickImage = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         uri?.let {
             currentImageUri = it
@@ -40,6 +42,7 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+        // This is how we let the user access the photo gallery to pick a picture
         binding.buttonPick.setOnClickListener {
             pickImage.launch("image/*")
         }
