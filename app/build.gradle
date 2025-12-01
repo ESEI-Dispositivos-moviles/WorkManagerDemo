@@ -43,7 +43,6 @@ dependencies {
     // TODO 02: Implement the dependencies defined in the version catalog.
     // This makes the libraries available to the app module.
     implementation libs.androidx.work.runtime.ktx
-    implementation libs.io.coil.kt
     implementation libs.androidx.lifecycle.viewmodel.ktx
     implementation libs.androidx.activity.ktx
     testImplementation libs.junit

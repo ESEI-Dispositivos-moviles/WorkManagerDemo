@@ -2,20 +2,14 @@ package gal.uvigo.workmanagerdemo
 
 import android.net.Uri
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
-import android.widget.ImageView
-import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.work.WorkInfo
-import coil.load
-import java.io.File
 
 class MainActivity : AppCompatActivity() {
 
