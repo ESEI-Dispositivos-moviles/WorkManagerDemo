@@ -38,7 +38,6 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-
         // TODO 10: Observe Download Status.
         viewModel.downloadWorkInfos.observe(this) { workInfos ->
             if (workInfos.isNullOrEmpty()) {

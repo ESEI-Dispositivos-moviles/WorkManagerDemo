@@ -19,7 +19,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     fun scheduleDownload() {
         // TODO 08: Define Strict Constraints.
-        // We want to be "Good Android Citizens".
         val constraints = Constraints.Builder()
             // 1. "Don't cost me money" - Require unmetered network (Wi-Fi).
             .setRequiredNetworkType(NetworkType.UNMETERED)

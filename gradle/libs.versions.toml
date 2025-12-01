@@ -13,7 +13,6 @@ work = "2.9.0"
 lifecycle = "2.7.0"
 
 # TODO 01: Add the necessary libraries to the version catalog.
-# We need WorkManager for background tasks, Coil for image loading, and Lifecycle/Activity KTX for ViewModel integration.
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
