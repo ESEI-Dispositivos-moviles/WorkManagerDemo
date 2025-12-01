@@ -18,13 +18,13 @@ import java.io.File
 import java.io.FileOutputStream
 import java.util.UUID
 import androidx.core.net.toUri
+import androidx.core.graphics.createBitmap
 
 // TODO 03: Create the Worker class.
 // This class performs the background work. It must extend CoroutineWorker (or Worker).
 class ImageWorker(context: Context, params: WorkerParameters) : CoroutineWorker(context, params) {
 
     // Override doWork() to define the actual work.
-    // This runs on a background thread (Dispatchers.Default by default for CoroutineWorker).
     override suspend fun doWork(): Result {
         // Read input data passed to the worker.
         val imageUriString = inputData.getString(KEY_IMAGE_URI) ?: return Result.failure()
@@ -32,7 +32,7 @@ class ImageWorker(context: Context, params: WorkerParameters) : CoroutineWorker(
         return withContext(Dispatchers.IO) {
             try {
                 val resolver = applicationContext.contentResolver
-                val imageUri = Uri.parse(imageUriString)
+                val imageUri = imageUriString.toUri()
                 
                 // 1. Read the image
                 val bitmap = BitmapFactory.decodeStream(resolver.openInputStream(imageUri))
@@ -61,7 +61,7 @@ class ImageWorker(context: Context, params: WorkerParameters) : CoroutineWorker(
     private fun applyGrayscaleFilter(src: Bitmap): Bitmap {
         val width = src.width
         val height = src.height
-        val dest = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+        val dest = createBitmap(width, height)
         
         val canvas = Canvas(dest)
         val paint = Paint()

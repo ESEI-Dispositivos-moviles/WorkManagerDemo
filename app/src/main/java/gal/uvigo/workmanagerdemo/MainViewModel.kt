@@ -19,14 +19,13 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     internal val outputWorkInfos: LiveData<List<WorkInfo>> = workManager.getWorkInfosByTagLiveData(TAG_OUTPUT)
 
     fun applyFilter(imageUri: Uri) {
+
         // Define constraints (optional).
-        // For example, require that the device storage is not low.
         val constraints = Constraints.Builder()
             .setRequiresStorageNotLow(true)
             .build()
 
         // Create the WorkRequest.
-        // OneTimeWorkRequest is for tasks that run once.
         // Pass input data and constraints here.
         val imageWorker = OneTimeWorkRequestBuilder<ImageWorker>()
             .setInputData(workDataOf(ImageWorker.KEY_IMAGE_URI to imageUri.toString()))
