@@ -2,20 +2,30 @@ package gal.uvigo.workmanagerdemo
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
+import androidx.lifecycle.viewModelScope
 import androidx.work.Constraints
 import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
-import androidx.work.workDataOf
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 
 // TODO 07: Create the ViewModel.
 // This class manages the WorkManager requests and exposes the work status.
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private val workManager = WorkManager.getInstance(application)
-    internal val downloadWorkInfos: LiveData<List<WorkInfo>> = workManager.getWorkInfosByTagLiveData(TAG_DOWNLOAD)
+
+    // A StateFlow is the Compose-friendly counterpart of the previous LiveData.
+    internal val downloadWorkInfos: StateFlow<List<WorkInfo>> =
+        workManager.getWorkInfosByTagFlow(TAG_DOWNLOAD)
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5_000),
+                initialValue = emptyList(),
+            )
 
     fun scheduleDownload() {
         // TODO 08: Define Strict Constraints.
