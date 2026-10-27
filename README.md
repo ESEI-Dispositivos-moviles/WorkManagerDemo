@@ -26,4 +26,12 @@ This branch demonstrates a more advanced use case with strict constraints: **Sim
     -   **Progress Updates**: The worker reports intermediate progress (0-100%), which is observed and displayed in the UI.
     -   **Status Handling**: The UI explicitly shows states like "Enqueued (Waiting for constraints)", "Downloading...", "Blocked", etc., helping users understand why a task might not run immediately.
 
+## UI: Jetpack Compose
+
+Both lesson branches use **Jetpack Compose** instead of XML layouts and Data Binding:
+
+-   The UI lives in composables inside `MainActivity.kt`; there is no `res/layout` file.
+-   The ViewModels expose `StateFlow` (via `getWorkInfosByTagFlow`) instead of `LiveData`, collected with `collectAsStateWithLifecycle()`.
+-   Workers and WorkManager request logic are unchanged.
+
 
